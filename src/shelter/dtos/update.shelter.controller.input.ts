@@ -17,3 +17,4 @@ export default class UpdateShelterControllerInput {
   @IsEmail()
   email: string
 }
+
