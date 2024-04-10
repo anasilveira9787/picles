@@ -2,18 +2,17 @@ import { Module } from '@nestjs/common';
 import { ShelterController } from './shelter.controller';
 import ShelterTokens from './shelter.tokens';
 import GetShelterDetailsUseCase from './usecases/get.shelter.details.usecase';
-import UpdateShelterDetailsUseCase from './usecases/update.shelter.details.usecase';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose/dist/mongoose.module';
 import { Shelter, ShelterSchema } from './schemas/shelter.schema';
-import { ShelterRepository } from './shelter.repository';
+import UpdateSheltherDetailsUseCase from './usecases/update.shelter.details.usecase';
+import UpdateShelterDetailsUseCase from './usecases/update.shelter.details.usecase';
+import ShelterRepository from './shelter.repository';
 
 @Module({
   controllers: [ShelterController],
-
   imports: [
-    MongooseModule.forFeature([{name: Shelter.name, schema: ShelterSchema }])
+    MongooseModule.forFeature([{ name: Shelter.name, schema: ShelterSchema }]),
   ],
-
   providers: [
     {
       provide: ShelterTokens.getShelterDetailsUseCase,
@@ -25,9 +24,8 @@ import { ShelterRepository } from './shelter.repository';
     },
     {
       provide: ShelterTokens.updateShelterDetailsUseCase,
-      useClass: UpdateShelterDetailsUseCase,
+      useClass: UpdateShelterDetailsUseCase
     }
-
-  ]
+  ],
 })
 export class ShelterModule {}
