@@ -15,7 +15,7 @@ export class Pet {
     size: string;
     @Prop({required: true})
     gender: string;
-    @Prop({required: true})
+    @Prop({required: false, default: null})
     photo: string;
     @Prop({required: true})
     bio: string;

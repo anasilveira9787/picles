@@ -1,7 +1,6 @@
 import UpdateShelterDetailsUseCaseInput from "../dtos/update.shelter.usecase.input";
 import UpdateShelterDetailsUseCaseOutput from "../dtos/update.shelter.usecase.output";
 import { IUseCase } from "src/domain/iusecase.interface";
-import { ShelterRepository } from "../shelter.repository";
 import IShelterRepository from "../interfaces/shelter.repository.interface";
 import ShelterTokens from "../shelter.tokens";
 import { Inject } from "@nestjs/common";
