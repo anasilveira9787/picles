@@ -17,6 +17,9 @@ import UpdatePetPhotoByIdUseCaseInput from './usecases/dtos/update.pet.photo.by.
 import UpdatePetPhotoByIdUseCaseOuput from './usecases/dtos/update.pet.photo.by.id.usecase.output';
 import UpdatePetPhotoByIdUseCaseOutput from './usecases/dtos/update.pet.photo.by.id.usecase.output';
 import GetPetUseCaseInput from './usecases/dtos/get.pets.usecase.input';
+import GetPetsUseCaseOutput from './usecases/dtos/get.pets.usecase.output';
+import GetPetsUseCaseInput from './usecases/dtos/get.pets.usecase.input';
+import { ApiBody } from '@nestjs/swagger';
 
 @Controller('pet')
 export class PetController {
@@ -36,6 +39,9 @@ export class PetController {
     @Inject(PetTokens.updatePetPhotoByIdUseCase)
     private readonly updatePetPhotoByIdUseCase: IUseCase<UpdatePetPhotoByIdUseCaseInput, UpdatePetPhotoByIdUseCaseOuput>
 
+    @Inject(PetTokens.getPetsUseCase)
+    private readonly getPetsUseCase: IUseCase<GetPetsUseCaseInput, GetPetsUseCaseOutput>
+
     @Post()
     async createPet(@Body() input: CreatePetControllerInput): Promise<CreatePetUseCaseOutput> {
         const useCaseInput = new CreatePetUseCaseInput({ ...input })
@@ -49,7 +55,7 @@ export class PetController {
         @Query('gender') gender?: string,
         @Query('page') page?: string,
         @Query('itemsPerPage') itemsPerPage?: string,
-    ){
+    ) : Promise<GetPetsUseCaseOutput>{
         const FIRST_PAGE = 1
         const DEFAULT_ITENS_PER_PAGE = 10
         const useCaseInput = new GetPetUseCaseInput({
@@ -59,6 +65,8 @@ export class PetController {
             page: !!page ? Number(page) : FIRST_PAGE,
             itemsPerPage: !!itemsPerPage ? parseInt(itemsPerPage) : DEFAULT_ITENS_PER_PAGE
          })
+
+         return await this.getPetsUseCase.run(useCaseInput)
         }
 
 
